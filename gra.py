@@ -42,11 +42,3 @@ class gra():
 if __name__=="__main__":
     spaceinvaders=gra()
     spaceinvaders.event()
-
-# def obraz(nazwa,colorkey=None,scale=1):
-#     pelna_nazwa=os.path.join(data_dir,nazwa)
-#     obraz=pg.image.load(pelna_nazwa)
-#     rozmiar=obraz.get_size
-#
-# main_dir=os.path.split(os.path.abspath(gra.py))[0]
-# data_dir=os.path.join(main_dir,"data")
