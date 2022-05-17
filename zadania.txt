@@ -1,0 +1,11 @@
+zadania:
+-przeciwnicy i poruszanie się (bonus:poruszanie się w osi y) OLA
+-strzelanie gracza WIKTORIA
+-osłony HUBERT
+-strzelanie przeciwników (HUBERT jak starczy czasu)
+-punkty
+-punkty życia/liczba statków
+-płynne poruszanie się (ADA)
+-grafiki
+-szybsi przeciwnicy
+-dźwięk
