@@ -30,6 +30,21 @@ class gra():
         self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
         #odświeża ekran, KONIECZNE ABY ZMIANY SIĘ POJAWIŁY
         pygame.display.update()
+        self.oslony=pygame.image.load ("oslony.png")
+        self.oslony.set_colorkey((0,0,0))
+        self.pozycja_oslony1_x=25
+        self.pozycja_oslony1_y=350
+        self.pozycja_oslony2_x=245
+        self.pozycja_oslony2_y=350
+        self.pozycja_oslony3_x=470
+        self.pozycja_oslony3_y=350
+        self.pozycja_oslony4_x=685
+        self.pozycja_oslony4_y=350
+        self.ekran.blit(self.oslony,(self.pozycja_oslony1_x, self.pozycja_oslony1_y))
+        self.ekran.blit(self.oslony,(self.pozycja_oslony2_x, self.pozycja_oslony2_y))
+        self.ekran.blit(self.oslony,(self.pozycja_oslony3_x, self.pozycja_oslony3_y))
+        self.ekran.blit(self.oslony,(self.pozycja_oslony4_x, self.pozycja_oslony4_y))
+        pygame.display.update()
     def event(self):
         while self.running:
             for event in pygame.event.get():
@@ -52,6 +67,11 @@ class gra():
                             self.pozycja_gracza_x-=self.krok
                             self.ekran.blit(self.tlo,(0,0))
                             self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
+                            self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony1_x, self.pozycja_oslony1_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony2_x, self.pozycja_oslony2_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony3_x, self.pozycja_oslony3_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony4_x, self.pozycja_oslony4_y))
                             pygame.display.update()
                     #jeśli klikniesz strzałkę w prawo
                     elif event.key==pygame.K_RIGHT:
@@ -61,6 +81,10 @@ class gra():
                             self.pozycja_gracza_x+=self.krok
                             self.ekran.blit(self.tlo,(0,0))
                             self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony1_x, self.pozycja_oslony1_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony2_x, self.pozycja_oslony2_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony3_x, self.pozycja_oslony3_y))
+                            self.ekran.blit(self.oslony,(self.pozycja_oslony4_x, self.pozycja_oslony4_y))
                             pygame.display.update()
 #to nie wiem w sumie czemu, ale w poradnikach tak piszą, żeby działało XD
 if __name__=="__main__":
