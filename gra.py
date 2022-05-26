@@ -24,8 +24,6 @@ class gra():
         #ustawia współrzędne początkowe gracza
         self.pozycja_gracza_x=450
         self.pozycja_gracza_y=500
-        #ustawia o ile przesuwa się gracz przy każdym kliknięciu
-        self.krok=10
         #wyświetla obrazek gracza na współrzędnych wcześniej ustawionych
         self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
         #odświeża ekran, KONIECZNE ABY ZMIANY SIĘ POJAWIŁY
@@ -52,40 +50,40 @@ class gra():
                 if event.type==pygame.QUIT:
                     self.running=False
                     break
-                #jeśli wciśniesz jakiś przycisk
-                elif event.type==pygame.KEYDOWN:
-                    #jeśli wciśniesz escape, wychodzi z gry
-                    if event.key==pygame.K_ESCAPE:
-                        self.running=False
-                        break
-                    #jeśli klikniesz strzałkę w lewo
-                    elif event.key==pygame.K_LEFT:
-                        #żeby gracz nie mógł wyjść poza ekran
-                        if self.pozycja_gracza_x>=10:
-                            #współrzędna x gracza zmniejsza się o krok (czyli o ile się przesuwa), po czym wyświetla zaktualizowaną pozycję po zmniejszeniu zmiennej i odświeża ekran
-                            #trzeba najpierw blitnąć tło, a potem wszystkie ikonki, bo inaczej stary obraz będzie widoczny
-                            self.pozycja_gracza_x-=self.krok
-                            self.ekran.blit(self.tlo,(0,0))
-                            self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
-                            self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony1_x, self.pozycja_oslony1_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony2_x, self.pozycja_oslony2_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony3_x, self.pozycja_oslony3_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony4_x, self.pozycja_oslony4_y))
-                            pygame.display.update()
-                    #jeśli klikniesz strzałkę w prawo
-                    elif event.key==pygame.K_RIGHT:
-                        #żeby gracz nie mógł wyjść poza ekran
-                        if self.pozycja_gracza_x<=self.szerokosc_ekranu-50:
-                            #analogicznie do ruchu w lewo
-                            self.pozycja_gracza_x+=self.krok
-                            self.ekran.blit(self.tlo,(0,0))
-                            self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony1_x, self.pozycja_oslony1_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony2_x, self.pozycja_oslony2_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony3_x, self.pozycja_oslony3_y))
-                            self.ekran.blit(self.oslony,(self.pozycja_oslony4_x, self.pozycja_oslony4_y))
-                            pygame.display.update()
+            #jeśli wciśniesz jakiś przycisk
+            przycisk = pygame.key.get_pressed()
+            #jeśli wciśniesz escape, wychodzi z gry
+            if przycisk[pygame.K_ESCAPE]:
+                self.running=False
+                break
+            #jeśli klikniesz strzałkę w lewo
+            elif przycisk[pygame.K_LEFT]:
+                #żeby gracz nie mógł wyjść poza ekran
+                if self.pozycja_gracza_x>=10:
+                    #współrzędna x gracza zmniejsza się o krok (czyli o ile się przesuwa), po czym wyświetla zaktualizowaną pozycję po zmniejszeniu zmiennej i odświeża ekran
+                    #trzeba najpierw blitnąć tło, a potem wszystkie ikonki, bo inaczej stary obraz będzie widoczny
+                    self.pozycja_gracza_x-=1
+                    self.ekran.blit(self.tlo,(0,0))
+                    self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
+                    self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony1_x, self.pozycja_oslony1_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony2_x, self.pozycja_oslony2_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony3_x, self.pozycja_oslony3_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony4_x, self.pozycja_oslony4_y))
+                    pygame.display.update()
+            #jeśli klikniesz strzałkę w prawo
+            elif przycisk[pygame.K_RIGHT]:
+                #żeby gracz nie mógł wyjść poza ekran
+                if self.pozycja_gracza_x<=self.szerokosc_ekranu-50:
+                        #analogicznie do ruchu w lewo
+                    self.pozycja_gracza_x+=1
+                    self.ekran.blit(self.tlo,(0,0))
+                    self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_gracza_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony1_x, self.pozycja_oslony1_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony2_x, self.pozycja_oslony2_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony3_x, self.pozycja_oslony3_y))
+                    self.ekran.blit(self.oslony,(self.pozycja_oslony4_x, self.pozycja_oslony4_y))
+                    pygame.display.update()
 #to nie wiem w sumie czemu, ale w poradnikach tak piszą, żeby działało XD
 if __name__=="__main__":
     #spaceinvaders jako instancja klasy gra
