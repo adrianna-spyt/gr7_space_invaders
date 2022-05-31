@@ -32,7 +32,7 @@ class Pocisk(pygame.sprite.Sprite):
             self.pozycja_pocisk=self.predkosc
             self.ekran.blit(self.tlo,(0,0))
             self.ekran.blit(self.gracz,(self.pozycja_gracza_x,self.pozycja_pocisk))
-            pygame.display.update()
+            pygame.display.update() 
 
         #odświeża ekran, KONIECZNE ABY ZMIANY SIĘ POJAWIŁY
         pygame.display.update()
