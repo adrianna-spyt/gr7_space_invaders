@@ -31,7 +31,7 @@ class gra():
         #odświeża ekran, KONIECZNE ABY ZMIANY SIĘ POJAWIŁY
         pygame.display.update()
         pygame.sprite.Sprite.__init__(self)
-        # ^tak się robi z tym spritem po prostu
+        
         
         #strzelanie
         self.pocisk=pygame.image.load("pocisk.png")
@@ -62,7 +62,7 @@ class gra():
         self.obraz_przeciwnicy.set_colorkey((0,0,0))
 
     def Przeciwnicy(self):
-        self.przeciwnicy_x = 120 # początkowe miejsce mojego pierwszego przeciwnika
+        self.przeciwnicy_x = 120 # początkowe miejsce pierwszego przeciwnika
         self.przeciwnicy_y = 70
 
 
@@ -132,7 +132,7 @@ class gra():
                           self.ekran.blit(self.pocisk,(self.pozycja_gracza_x,self.pocisk_y))
 
                           pygame.display.update()
-#to nie wiem w sumie czemu, ale w poradnikach tak piszą, żeby działało XD
+
 if __name__=="__main__":
     #spaceinvaders jako instancja klasy gra
     spaceinvaders=gra()
@@ -142,4 +142,4 @@ if __name__=="__main__":
     spaceinvaders.event()
 
 
-#jakby co, to pytajcie <3
+
