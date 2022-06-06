@@ -20,11 +20,10 @@ class gra():
         while self.running:
             self.ekran.blit(self.tlo,(0,0))
             gracz1.wyswietl()
-            for i in range(3):
-                for j in range(7):
-                    przeciwnik.wyswietl(i,j)
             oslonki.wyswietl()
             pocisk.wyswietl()
+            przeciwnik.przesuwanie_przeciwnikow()
+            przeciwnik.wyswietl()
             pygame.display.update()
             for event in pygame.event.get():
                 #wychodzi z gry po kliknięciu X w prawym górnym rogu
@@ -60,9 +59,8 @@ class gra():
                   self.pocisk_y-=self.pocisk_V
                   self.ekran.blit(self.tlo,(0,0))
                   gracz1.wyswietl()
-                  for i in range(3):
-                      for j in range(7):
-                          przeciwnik.wyswietl(i,j)
+                  przeciwnik.przesuwanie_przeciwnikow()
+                  przeciwnik.wyswietl()
                   oslonki.wyswietl()
                   pocisk.wyswietl()
                   pygame.display.update()
@@ -117,22 +115,40 @@ class przeciwnicy():
     def __init__(self):
         self.obraz_przeciwnicy=pygame.image.load("przeciwnik.png")
         self.obraz_przeciwnicy.set_colorkey((0,0,0))
-        self.przec_pocz_x = 120 # początkowe miejsce pierwszego przeciwnika
+        self.przec_pocz_x = 0 # początkowe miejsce pierwszego przeciwnika
         self.przec_pocz_y = 70
         self.odstep_rzedy = 100
         self.odstep_kolumny = 100
-    def wyswietl(self,rzad,kolumna):
-        # if i==1:
-        #     self.przeciwnik_y = self.przec_pocz_y
-        # else:
-        #     self.przeciwnik_y = self.przec_pocz_y + 30*(i-1)
-        # if j==1:
-        #     self.przeciwnik_x = self.przec_pocz_x
-        # else:
-        #     self.przeciwnik_x = self.przec_pocz_x + 100*(j-1)
-        self.przeciwnik_y = 70+self.odstep_rzedy*rzad
-        self.przeciwnik_x = 120+self.odstep_kolumny*kolumna
-        spaceinvaders.ekran.blit(self.obraz_przeciwnicy,(self.przeciwnik_x,self.przeciwnik_y))
+        self.kierunek = 1 # +1 będzie szedł w prawo, a -1 będzie szedł w lewo
+        self.granica = 650 # ustaliłam sobie taką granicę, jako wyznacznik dla jakiej wartości dalej ma zmianić kierunek
+
+
+    def wyswietl(self):
+        for i in range(len(self.tablica_przeciwnikow)):
+            spaceinvaders.ekran.blit(self.obraz_przeciwnicy, (self.tablica_przeciwnikow[i][0], self.tablica_przeciwnikow[i][1]))
+
+    def generowanie_przeciwnikow(self, kolumny, rzedy):
+        self.tablica_przeciwnikow = []
+        for kazdy in range(rzedy):
+            for wszystkie in range(kolumny):
+                self.tablica_przeciwnikow.append([self.przec_pocz_x + (self.odstep_kolumny * wszystkie), self.przec_pocz_y + (self.odstep_rzedy * kazdy)] )
+
+    def przesuwanie_przeciwnikow(self):
+        if self.granica > 5700:
+            self.kierunek = -1
+        if self.granica < 700:
+            self.kierunek = 1
+        if self.kierunek == 1:
+            for i in range(len(self.tablica_przeciwnikow)):
+                self.tablica_przeciwnikow[i][0]+=1
+                self.granica += 1
+        if self.kierunek == -1:
+            for i in range(len(self.tablica_przeciwnikow)):
+                self.tablica_przeciwnikow[i][0]-=1
+                self.granica -= 1
+
+
+
 
 if __name__=="__main__":
     spaceinvaders=gra()
@@ -140,5 +156,6 @@ if __name__=="__main__":
     gracz1=gracz()
     oslonki=oslony()
     pocisk=pociski()
+    przeciwnik.generowanie_przeciwnikow(7, 3)
     while spaceinvaders.running:
         spaceinvaders.event()
