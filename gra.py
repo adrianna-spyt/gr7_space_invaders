@@ -21,7 +21,7 @@ class gra():
         pygame.mixer.music.load("muzyka.mp3")
         pygame.mixer.music.play(-1)
         #punkty gracza
-
+        self.punkty=0
         self.font = pygame.font.SysFont("Arial",36)
 
 
@@ -30,7 +30,7 @@ class gra():
         while self.running:
             self.ekran.blit(self.tlo,(0,0))
             #ekran pnktow
-            wynik = self.font.render("Punkty: " + str(pocisk.punkty),True, (225,225,225))
+            wynik = self.font.render("Punkty: " + str(self.punkty),True, (225,225,225))
             spaceinvaders.ekran.blit(wynik,(60,20))
             gracz1.wyswietl()
             oslonki.wyswietl()
@@ -76,14 +76,20 @@ class gra():
                   przeciwnik.przesuwanie_przeciwnikow()
                   przeciwnik.wyswietl()
                   oslonki.wyswietl()
-                  pocisk.kolizja()
+                 # pocisk.kolizja()
                   pygame.display.update()
             #póżniej gdy tablica przeciwników będzie pusta
-            elif pocisk.punkty=="100":
+            elif self.punkty=="100":
                 wynik = self.font.render("Punkty: " ,True, (225,225,225))
                 spaceinvaders.ekran.blit(wynik,(150,150))
+            #wykrywanie kolizji
+            elif pocisk.pocisk_stan=="start":
+                self.celny=pocisk.kolizja(pocisk.pozycja_pocisk_x,gracz1.pozycja_gracza_x,pocisk.pozycja_pocisk_y,gracz1.pozycja_gracza_y)
+                if self.celny==True:
+                    self.punkty+=1
 
-            #wyświetlamy wszystko
+
+            #wyświetlamy wszystkoself.celny_strzal=pocisk.kolizja(self,pocisk.pozycja_pocisk_x,przeciwnicy.tablica_przeciwnikow[i],pocisk.pozycja_pocisk_y,70)
 
 class gracz():
     def __init__(self):
@@ -127,30 +133,30 @@ class pociski():
         self.pocisk_V= 3  #prędkość
         self.pozycja_pocisk_y=gracz1.pozycja_gracza_y
         self.pozycja_pocisk_x=gracz1.pozycja_gracza_x
-        self.punkty=0
+
 
     def pozycja_strzal(self):
-
          if self.pocisk_stan=="start":
              spaceinvaders.ekran.blit(self.pocisk,(self.pozycja_pocisk_x,self.pozycja_pocisk_y))
              self.pozycja_pocisk_y-=self.pocisk_V
-
-         if self.pozycja_pocisk_y<0:
+         if self.pocisk_stan=="stop":
              self.pozycja_pocisk_x=gracz1.pozycja_gracza_x+7
+         if self.pozycja_pocisk_y<50:
              self.pocisk_stan="stop"
              self.pozycja_pocisk_y=gracz1.pozycja_gracza_y
 
-    def kolizja(self):
-         self.punkty+=1
+    def kolizja(self,x,x1,y,y1):
+        self.odleglosc=math.sqrt((math.pow(x-x1,2))+(math.pow(y-y1,2)))
+        if self.odleglosc<60:
+            return True
 
-
-
-        #self.odleglosc=math.sqrt((math.pow(x1-x2,2))+math.pow(y1-y2,2))
-        #if odleglosc<50:
+        # for i in range (len(przeciwnicy.przesuwanie_przeciwnikow))
+        #
         #    punkt+=1
         #if self.pozycja_pocisk_y==70 or self.pozycja_pocisk_y==170 or self.pozycja_pocisk_y==240:
 
 
+        # self.pocisk_stan = "nieaktywny"
 class przeciwnicy():
     def __init__(self):
         self.obraz_przeciwnicy=pygame.image.load("przeciwnik.png")
@@ -172,7 +178,7 @@ class przeciwnicy():
         for kazdy in range(rzedy):
             for wszystkie in range(kolumny):
                 self.tablica_przeciwnikow.append([self.przec_pocz_x + (self.odstep_kolumny * wszystkie), self.przec_pocz_y + (self.odstep_rzedy * kazdy)] )
-
+                #print(self.tablica_przeciwnikow)
     def przesuwanie_przeciwnikow(self):
         if self.granica > 5700:
             self.kierunek = -1
