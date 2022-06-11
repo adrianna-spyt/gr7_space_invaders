@@ -3,9 +3,10 @@ zadania:
 -strzelanie gracza WIKTORIA
 -osłony HUBERT
 -strzelanie przeciwników (HUBERT jak starczy czasu)
--punkty 
+-punkty WIKTORIA
 -punkty życia/liczba statków
 -płynne poruszanie się (ADA)
 -grafiki
 -szybsi przeciwnicy
 -dźwięk WIKTORIA
+-kolizja strzału z przeciwnikiem WIKTORIA
