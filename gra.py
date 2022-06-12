@@ -18,10 +18,13 @@ class gra():
         #blit = zmiana tego, co się wyświetla na ekranie UWAGA trzeba jeszcze ekran przeładować, aby się wyświetliło
         self.ekran.blit(self.tlo,(0,0))
         #muzyka w grze
-        pygame.mixer.music.load("muzyka.mp3")
-        pygame.mixer.music.play(-1)
+        self.muzyka=pygame.mixer.Sound("muzyka.mp3")
+        self.muzyka.play(-1)
+        self.strzal_m=pygame.mixer.Sound("shot.mp3")
         #punkty gracza
         self.punkty=0
+        #życia gracza
+        self.zycia=3
         self.font = pygame.font.SysFont("Arial",36)
 
 
@@ -32,6 +35,8 @@ class gra():
             #ekran pnktow
             wynik = self.font.render("Punkty: " + str(self.punkty),True, (225,225,225))
             spaceinvaders.ekran.blit(wynik,(60,20))
+            zycie = self.font.render("Życia: " + str(self.zycia),True, (225,225,225))
+            spaceinvaders.ekran.blit(zycie,(700,20))
             gracz1.wyswietl()
             oslonki.wyswietl()
             przeciwnik.przesuwanie_przeciwnikow()
@@ -71,6 +76,7 @@ class gra():
             #jesli space to strzelamy
             elif przycisk[pygame.K_SPACE]:
                   pocisk.pocisk_stan="start"
+                  self.strzal_m.play(0)
                   pocisk.pozycja_strzal()
                   gracz1.wyswietl()
                   przeciwnik.przesuwanie_przeciwnikow()
@@ -84,12 +90,13 @@ class gra():
                 spaceinvaders.ekran.blit(wynik,(150,150))
             #wykrywanie kolizji
             elif pocisk.pocisk_stan=="start":
-                self.celny=pocisk.kolizja(pocisk.pozycja_pocisk_x,gracz1.pozycja_gracza_x,pocisk.pozycja_pocisk_y,gracz1.pozycja_gracza_y)
-                if self.celny==True:
+                self.celny=pocisk.kolizja(pocisk.pozycja_pocisk_x,170,pocisk.pozycja_pocisk_y,350)#wspolrzedne na testy, funkcja dziala
+                if self.celny==True:#jesli trafiono w przeciwnika
                     self.punkty+=1
+                    spaceinvaders.ekran.blit(pocisk.pocisk_st,(pocisk.pozycja_pocisk_x,pocisk.pozycja_pocisk_y))
+                pygame.display.update()
 
-
-            #wyświetlamy wszystkoself.celny_strzal=pocisk.kolizja(self,pocisk.pozycja_pocisk_x,przeciwnicy.tablica_przeciwnikow[i],pocisk.pozycja_pocisk_y,70)
+    
 
 class gracz():
     def __init__(self):
@@ -129,6 +136,8 @@ class pociski():
         #strzelanie
         self.pocisk=pygame.image.load("pocisk.png")
         self.pocisk.set_colorkey((0,225,0))
+        self.pocisk_st=pygame.image.load("pocisk_st.png")
+        self.pocisk_st.set_colorkey((0,225,0))
         self.pocisk_stan= "stop" #"niekatwny" gdy strzął zostanie wykonany
         self.pocisk_V= 3  #prędkość
         self.pozycja_pocisk_y=gracz1.pozycja_gracza_y
@@ -137,26 +146,20 @@ class pociski():
 
     def pozycja_strzal(self):
          if self.pocisk_stan=="start":
-             spaceinvaders.ekran.blit(self.pocisk,(self.pozycja_pocisk_x,self.pozycja_pocisk_y))
+             spaceinvaders.ekran.blit(pocisk.pocisk,(pocisk.pozycja_pocisk_x,pocisk.pozycja_pocisk_y))
+             #self.pocisk_wyswietl=True
              self.pozycja_pocisk_y-=self.pocisk_V
          if self.pocisk_stan=="stop":
-             self.pozycja_pocisk_x=gracz1.pozycja_gracza_x+7
+             self.pozycja_pocisk_x=gracz1.pozycja_gracza_x+13
          if self.pozycja_pocisk_y<50:
              self.pocisk_stan="stop"
              self.pozycja_pocisk_y=gracz1.pozycja_gracza_y
 
     def kolizja(self,x,x1,y,y1):
         self.odleglosc=math.sqrt((math.pow(x-x1,2))+(math.pow(y-y1,2)))
-        if self.odleglosc<60:
+        if self.odleglosc<100:
             return True
 
-        # for i in range (len(przeciwnicy.przesuwanie_przeciwnikow))
-        #
-        #    punkt+=1
-        #if self.pozycja_pocisk_y==70 or self.pozycja_pocisk_y==170 or self.pozycja_pocisk_y==240:
-
-
-        # self.pocisk_stan = "nieaktywny"
 class przeciwnicy():
     def __init__(self):
         self.obraz_przeciwnicy=pygame.image.load("przeciwnik.png")
